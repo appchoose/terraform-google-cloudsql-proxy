@@ -95,4 +95,10 @@ resource "google_compute_instance" "main" {
       "https://www.googleapis.com/auth/sqlservice.admin",
     ]
   }
+
+  lifecycle {
+    ignore_changes = [
+      boot_disk[0].initialize_params[0].image
+    ]
+  }
 }
