@@ -36,6 +36,13 @@ module "gce_container_sqlproxy" {
   restart_policy = "Always"
 }
 
+resource "google_project_iam_member" "log_writer_to_vm_sa" {
+  project = var.project
+  role    = "roles/logging.logWriter"
+
+  member = "serviceAccount:${google_service_account.main.email}"
+}
+
 resource "google_compute_firewall" "inbound" {
   name        = "allow-${local.instance_name}"
   network     = var.firewall_network
@@ -75,10 +82,11 @@ resource "google_compute_instance" "main" {
   }
 
   metadata = {
-    gce-container-declaration = module.gce_container_sqlproxy.metadata_value
-    google-logging-enabled    = "true"
-    google-monitoring-enabled = "true"
-    block-project-ssh-keys    = true
+    gce-container-declaration    = module.gce_container_sqlproxy.metadata_value
+    google-logging-enabled       = "true"
+    google-logging-use-fluentbit = "true"
+    google-monitoring-enabled    = "true"
+    block-project-ssh-keys       = true
   }
 
   labels = {
