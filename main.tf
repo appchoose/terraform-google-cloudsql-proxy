@@ -43,6 +43,13 @@ resource "google_project_iam_member" "log_writer_to_vm_sa" {
   member = "serviceAccount:${google_service_account.main.email}"
 }
 
+resource "google_project_iam_member" "metric_writer_to_vm_sa" {
+  project = var.project
+  role    = "roles/monitoring.metricWriter"
+
+  member = "serviceAccount:${google_service_account.main.email}"
+}
+
 resource "google_compute_firewall" "inbound" {
   name        = "allow-${local.instance_name}"
   network     = var.firewall_network
