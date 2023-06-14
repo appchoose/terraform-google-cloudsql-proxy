@@ -89,9 +89,10 @@ resource "google_compute_instance" "main" {
     block-project-ssh-keys       = true
   }
 
-  labels = {
-    container-vm = module.gce_container_sqlproxy.vm_container_label
-  }
+  labels = merge(
+    { container-vm = module.gce_container_sqlproxy.vm_container_label },
+    var.labels
+  )
 
   tags = [
     local.network_tag

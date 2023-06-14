@@ -70,3 +70,9 @@ variable "allow_public_ip" {
   type        = bool
   default     = false
 }
+
+variable "labels" {
+  description = "A set of key/value label pairs to assign to the vm."
+  type        = map(string)
+  default     = {}
+}
