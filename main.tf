@@ -88,6 +88,8 @@ resource "google_compute_instance" "main" {
     }
   }
 
+  allow_stopping_for_update = true
+
   metadata = {
     gce-container-declaration    = module.gce_container_sqlproxy.metadata_value
     google-logging-enabled       = "true"
