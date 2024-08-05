@@ -108,7 +108,7 @@ resource "google_compute_instance" "main" {
   service_account {
     email = google_service_account.main.email
     scopes = [
-      "https://www.googleapis.com/auth/sqlservice.admin",
+      "https://www.googleapis.com/auth/cloud-platform",
     ]
   }
 
